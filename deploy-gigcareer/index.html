@@ -56,7 +56,9 @@ $(document).ready(function () {
         $('.sec').eq(index).addClass('is--on');
         if (index === 0 && window.protSwiper) {
             requestAnimationFrame(function () {
-                window.protSwiper.update();
+                var s = window.protSwiper;
+                s.update();
+                s.slideTo(s.activeIndex, 0, false);
             });
         }
     });
@@ -278,6 +280,10 @@ body.profile-active .sec02 .sec-inner > div{
     overscroll-behavior:contain;
     -webkit-overflow-scrolling:touch;
 }
+
+
+body.profile-active .sec02 .sec-inner > div::-webkit-scrollbar{width:0;}
+
 body.profile-active .sec02 .conts-wrap,
 body.profile-active .sec02 .cont{ width:100%; margin-left:0; max-width:100%; }
 .sec02 .flex-box > div:not(.bg-img){ min-height:85vh; display:flex; flex-direction:column; justify-content:center; padding:8vh 0; box-sizing:border-box; }
@@ -313,6 +319,7 @@ body.profile-active .sec02 .cont{ width:100%; margin-left:0; max-width:100%; }
     .modal .info_box ul{display : flex; flex-direction: column; gap:10px;}
     .modal .info_box ul li{position: relative; padding-left:12px; font-size:16px; opacity: .75; word-break: keep-all;}
     .modal .info_box ul li::before{position: absolute; content:''; top:11px; left:0; width:3px; height:3px; background: #ee3d47;;}
+    .modal .info_box ul li a:hover{color:#fff; text-decoration:underline; transition: all .3s ease;}
     .modal.prot-0104 .container{flex-direction: column; align-items: center; gap:100px;}
     .modal.prot-0104 .content{flex-direction: column; align-items: center; gap:25px;}
     .modal.prot-0104 .img_box{width:100%;}
@@ -860,6 +867,13 @@ body.profile-active .sec02 .cont{ width:100%; margin-left:0; max-width:100%; }
                     <script>
                         var protScrollbarDragging = false;
 
+                        function getProtSlideIndex(swiper, progress) {
+                            var total = swiper.slides.length;
+                            if (total <= 1) return 0;
+                            progress = Math.max(0, Math.min(1, progress));
+                            return Math.round(progress * (total - 1));
+                        }
+
                         function getProtScrollProgress(swiper) {
                             var min = swiper.minTranslate();
                             var max = swiper.maxTranslate();
@@ -868,19 +882,24 @@ body.profile-active .sec02 .cont{ width:100%; margin-left:0; max-width:100%; }
                             return (swiper.translate - min) / range;
                         }
 
-                        function syncProtScrollbar(swiper) {
+                        function setProtScrollbarThumb(swiper, progress) {
                             var scrollbar = swiper.scrollbar;
                             if (!scrollbar || !scrollbar.el || !scrollbar.dragEl) return;
 
                             var trackSize = scrollbar.el.offsetHeight;
                             var dragSize = scrollbar.dragEl.offsetHeight;
-                            var progress = Math.max(0, Math.min(1, getProtScrollProgress(swiper)));
+                            progress = Math.max(0, Math.min(1, progress));
                             var position = (trackSize - dragSize) * progress;
 
                             scrollbar.dragEl.style.transform = "translate3d(0px, " + position + "px, 0px)";
                         }
 
-                        function setProtScrollProgress(swiper, progress) {
+                        function syncProtScrollbar(swiper) {
+                            setProtScrollbarThumb(swiper, getProtScrollProgress(swiper));
+                        }
+
+                        /* 드래그 중: 연속 이동 (스냅 없음) */
+                        function setProtDragProgress(swiper, progress) {
                             var min = swiper.minTranslate();
                             var max = swiper.maxTranslate();
                             progress = Math.max(0, Math.min(1, progress));
@@ -888,6 +907,16 @@ body.profile-active .sec02 .cont{ width:100%; margin-left:0; max-width:100%; }
                             swiper.setTranslate(min + progress * (max - min));
                             swiper.updateProgress();
                             swiper.updateActiveIndex();
+                            if (typeof swiper.updateSlidesClasses === "function") {
+                                swiper.updateSlidesClasses();
+                            }
+                            setProtScrollbarThumb(swiper, progress);
+                        }
+
+                        /* 드래그 종료·트랙 클릭: 가장 가까운 슬라이드로 스냅 */
+                        function snapProtToSlide(swiper, progress, speed) {
+                            var index = getProtSlideIndex(swiper, progress);
+                            swiper.slideTo(index, speed !== undefined ? speed : 750);
                             syncProtScrollbar(swiper);
                         }
 
@@ -926,12 +955,18 @@ body.profile-active .sec02 .cont{ width:100%; margin-left:0; max-width:100%; }
                                 var newPosition = Math.max(0, Math.min(trackSize - dragSize, startPosition + (clientY - startY)));
                                 var progress = newPosition / (trackSize - dragSize);
 
-                                setProtScrollProgress(swiper, progress);
+                                setProtDragProgress(swiper, progress);
                                 e.preventDefault();
                             }
 
                             function onPointerUp() {
+                                var trackSize = track.offsetHeight;
+                                var dragSize = dragEl.offsetHeight;
+                                var position = getDragPosition();
+                                var progress = trackSize > dragSize ? position / (trackSize - dragSize) : 0;
+
                                 protScrollbarDragging = false;
+                                snapProtToSlide(swiper, progress, 750);
                                 document.removeEventListener("mousemove", onPointerMove);
                                 document.removeEventListener("mouseup", onPointerUp);
                                 document.removeEventListener("touchmove", onPointerMove);
@@ -946,7 +981,7 @@ body.profile-active .sec02 .cont{ width:100%; margin-left:0; max-width:100%; }
                                 var trackSize = track.offsetHeight;
                                 var position = e.clientY - trackRect.top - dragSize / 2;
                                 position = Math.max(0, Math.min(trackSize - dragSize, position));
-                                setProtScrollProgress(swiper, position / (trackSize - dragSize));
+                                snapProtToSlide(swiper, position / (trackSize - dragSize), 750);
                             }
 
                             dragEl.addEventListener("mousedown", onPointerDown);
@@ -1021,6 +1056,11 @@ body.profile-active .sec02 .cont{ width:100%; margin-left:0; max-width:100%; }
                                     syncProtScrollbar(this);
                                     initProtScrollbarDrag(this);
                                     refreshProtSwiper(this);
+                                },
+                                slideChange: function () {
+                                    if (!protScrollbarDragging) {
+                                        syncProtScrollbar(this);
+                                    }
                                 },
                                 setTranslate: function () {
                                     if (!protScrollbarDragging) {
