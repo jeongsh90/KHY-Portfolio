@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="D-GIG 폐쇄망 작업공간 첫 화면">
+    <title>폐쇄망 작업공간 | D-GIG</title>
+    <link rel="stylesheet" href="assets/dgig.css">
+</head>
+<body>
+    <header class="site-header">
+        <a class="brand" href="index.html" aria-label="D-GIG 홈">
+            <span class="brand-dot"></span>
+            <span>D-GIG</span>
+        </a>
+        <nav class="primary-nav" aria-label="주요 메뉴">
+            <a href="index.html">홈</a>
+            <a href="index.html#matching">매칭</a>
+            <a href="index.html#localcrew">LOCALCREW</a>
+            <a class="is-active" href="workspace.html">작업공간</a>
+        </nav>
+        <nav class="language-nav" aria-label="Language">
+            <a class="is-active" href="workspace.html">KO</a>
+            <a href="workspace.html">EN</a>
+            <a href="workspace.html">中文</a>
+            <a href="workspace.html">ES</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero screen-panel workspace-hero" aria-labelledby="workspace-title">
+            <div class="hero-copy">
+                <p class="eyebrow"><span></span> Secure D-GIG Workspace -- Program Home</p>
+                <h1 id="workspace-title">Opportunity beyond<br><em>Seoul.</em></h1>
+                <p class="hero-desc">
+                    폐쇄망 작업공간에 들어오면 가장 먼저 확인해야 하는 프로그램 첫 화면입니다.<br>
+                    로컬 긱 수행부터 LER 검증, 글로벌 매칭까지 한 화면에서 이어집니다.
+                </p>
+                <div class="hero-actions" aria-label="작업공간 실행">
+                    <a class="btn btn-primary" href="experience.html">LER 크레덴셜 체험하기 <span aria-hidden="true">&rarr;</span></a>
+                    <a class="btn" href="experience.html#role-match">역할 태그 매칭 체험</a>
+                    <a class="btn" href="index.html">메인으로</a>
+                </div>
+            </div>
+
+            <div class="workspace-shell" aria-label="작업공간 시작 패널">
+                <div class="workspace-card">
+                    <span class="workspace-badge">Closed Network</span>
+                    <h2>D-GIG Program Home</h2>
+                    <p>실무 프로젝트, 검증 기록, 매칭 후보를 폐쇄망 안에서 안전하게 확인합니다.</p>
+                    <div class="workspace-grid">
+                        <a href="experience.html">
+                            <strong>LER Credential</strong>
+                            <span>체험 설명 + 5단계 검증</span>
+                        </a>
+                        <a href="experience.html#role-match">
+                            <strong>Role Tag Match</strong>
+                            <span>Maker &middot; Reviewer &middot; Client &middot; Admin</span>
+                        </a>
+                        <a href="index.html#localcrew">
+                            <strong>Local Gig</strong>
+                            <span>지역 프로젝트 흐름 보기</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="stats-grid" aria-label="작업공간 주요 지표">
+                <article class="stat-card">
+                    <strong>240+</strong>
+                    <span>수행 완료 과업</span>
+                </article>
+                <article class="stat-card">
+                    <strong>96%</strong>
+                    <span>마감 준수율</span>
+                </article>
+                <article class="stat-card">
+                    <strong>47</strong>
+                    <span>발급 크레덴셜</span>
+                </article>
+                <article class="stat-card">
+                    <strong>5-Step</strong>
+                    <span>LER 체험 플로우</span>
+                </article>
+            </div>
+
+            <section class="terminal-demo" aria-labelledby="workspace-terminal-title">
+                <h2 id="workspace-terminal-title">LER 검증 데모</h2>
+                <div class="terminal-window" role="img" aria-label="LER 검증 결과 예시">
+                    <p><span class="prompt">$</span> ler-verify --candidate kim_daejeon_001</p>
+                    <p class="success">&#10004; Project: 대전 스타트업 마케팅 데이터 분석 (4주)</p>
+                    <p class="success">&#10004; Skills verified: Data Analysis &middot; Figma &middot; Copywriting</p>
+                    <p class="success">&#10004; Outcome score: 92 / 100</p>
+                    <p class="match">&rarr; Match: 서울 핀테크 스타트업 (원격 계약직)</p>
+                </div>
+            </section>
+        </section>
+    </main>
+
+    <script src="assets/dgig.js"></script>
+</body>
+</html>

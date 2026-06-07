@@ -2,12 +2,104 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="refresh" content="0; url=deploy-gigcareer/">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KHY Portfolio</title>
-    <script>location.replace('deploy-gigcareer/');</script>
+    <meta name="description" content="GigCareer D-GIG 폐쇄망 작업공간과 LER 크레덴셜 데모">
+    <title>D-GIG | GigCareer</title>
+    <link rel="stylesheet" href="assets/dgig.css">
 </head>
 <body>
-    <p><a href="deploy-gigcareer/">포트폴리오 보기</a></p>
+    <header class="site-header">
+        <a class="brand" href="index.html" aria-label="D-GIG 홈">
+            <span class="brand-dot"></span>
+            <span>D-GIG</span>
+        </a>
+        <nav class="primary-nav" aria-label="주요 메뉴">
+            <a class="is-active" href="index.html">홈</a>
+            <a href="#matching">매칭</a>
+            <a href="#localcrew">LOCALCREW</a>
+            <a href="workspace.html">작업공간</a>
+        </nav>
+        <nav class="language-nav" aria-label="Language">
+            <a class="is-active" href="index.html">KO</a>
+            <a href="index.html">EN</a>
+            <a href="index.html">中文</a>
+            <a href="index.html">ES</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero screen-panel" aria-labelledby="hero-title">
+            <div class="hero-copy">
+                <p class="eyebrow"><span></span> GigCareer X D-GIG Platform -- 대전·충청권</p>
+                <h1 id="hero-title">Opportunity beyond<br><em>Seoul.</em></h1>
+                <p class="hero-desc">
+                    물리적 거리와 기회의 한계가 되지 않도록,<br>
+                    지역의 잠재력과 청년의 역량을 데이터로 증명하는<br>
+                    새로운 생태계를 엽니다.
+                </p>
+                <div class="hero-actions" aria-label="주요 실행">
+                    <a class="btn btn-primary" href="workspace.html">폐쇄망 작업공간 <span aria-hidden="true">&rarr;</span></a>
+                    <a class="btn" href="experience.html">LER 플랫폼 데모</a>
+                    <a class="btn" href="experience.html#role-match">역할 태그 매칭 체험</a>
+                </div>
+            </div>
+
+            <div class="stats-grid" aria-label="D-GIG 주요 수치">
+                <article class="stat-card">
+                    <strong>52%</strong>
+                    <span>대전 대졸자 타 지역 유출률</span>
+                </article>
+                <article class="stat-card">
+                    <strong>12.4명</strong>
+                    <span>인문·사회계열 일자리당 경쟁자</span>
+                </article>
+                <article class="stat-card">
+                    <strong>LER</strong>
+                    <span>학습·고용 기록 자산화</span>
+                </article>
+                <article class="stat-card">
+                    <strong>3-Step</strong>
+                    <span>Local &rarr; Data &rarr; Global</span>
+                </article>
+            </div>
+
+            <section class="flow" id="localcrew" aria-labelledby="flow-title">
+                <div class="section-heading">
+                    <h2 id="flow-title">로컬에서의 경험을 글로벌 커리어로 자산화</h2>
+                    <p>D-GIG는 지역 기업과 청년을 연결하는 로컬 긱 플랫폼입니다</p>
+                </div>
+                <ol class="flow-steps">
+                    <li>
+                        <span>01</span>
+                        <strong>Local Gig</strong>
+                        <p>지역 기업·대학 단기 실무 프로젝트로 진짜 경험과 결과물을 만듭니다</p>
+                    </li>
+                    <li>
+                        <span>02</span>
+                        <strong>LER Data</strong>
+                        <p>수행 과정·결과가 검증된 LER로 저장되고 포트폴리오가 자동 생성됩니다</p>
+                    </li>
+                    <li>
+                        <span>03</span>
+                        <strong>Global Match</strong>
+                        <p>검증된 실무 데이터로 수도권·글로벌 스킬 기반 채용과 연결됩니다</p>
+                    </li>
+                </ol>
+            </section>
+
+            <section class="terminal-demo" id="matching" aria-labelledby="terminal-title">
+                <h2 id="terminal-title">LER 검증 데모</h2>
+                <div class="terminal-window" role="img" aria-label="LER 검증 결과 예시">
+                    <p><span class="prompt">$</span> ler-verify --candidate kim_daejeon_001</p>
+                    <p class="success">&#10004; Project: 대전 스타트업 마케팅 데이터 분석 (4주)</p>
+                    <p class="success">&#10004; Skills verified: Data Analysis &middot; Figma &middot; Copywriting</p>
+                    <p class="success">&#10004; Outcome score: 92 / 100</p>
+                    <p class="match">&rarr; Match: 서울 핀테크 스타트업 (원격 계약직)</p>
+                </div>
+            </section>
+        </section>
+    </main>
+
+    <script src="assets/dgig.js"></script>
 </body>
 </html>
