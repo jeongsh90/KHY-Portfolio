@@ -144,6 +144,14 @@ a {
     padding: clamp(62px, 8vw, 96px) clamp(18px, 4vw, 44px) 72px;
 }
 
+.demo-view {
+    display: none;
+}
+
+.demo-view.is-active {
+    display: block;
+}
+
 .hero {
     display: grid;
     grid-template-columns: minmax(0, 1fr);
